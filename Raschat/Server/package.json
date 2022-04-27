@@ -1,11 +1,11 @@
 {
-  "name": "raschat_client",
+  "name": "raschat_server",
   "version": "1.0.0",
-  "description": "Applicazione di messaggistica (client), fatta con Node.js, per il progetto scolastico di fine anno scolastico 2021/2022.",
+  "description": "Applicazione di messaggistica (server), fatta con Node.js, per il progetto scolastico di fine anno scolastico 2021/2022.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,5 @@
   "dependencies": {
     "express": "^4.18.0",
     "socket.io": "^4.5.0"
-  },
-  "devDependencies": {
-    "electron": "^18.1.0"
   }
 }
