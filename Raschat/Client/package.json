@@ -1,0 +1,19 @@
+{
+  "name": "raschat_client",
+  "version": "1.0.0",
+  "description": "Applicazione di messaggistica (client), fatta con Node.js, per il progetto scolastico di fine anno scolastico 2021/2022.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gmarck04/Raschat.git"
+  },
+  "author": "gmarck04",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gmarck04/Raschat/issues"
+  },
+  "homepage": "https://github.com/gmarck04/Raschat#readme"
+}
