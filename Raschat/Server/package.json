@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/gmarck04/Raschat#readme",
   "dependencies": {
-    "express": "^4.18.0",
+    "delivery": "^0.0.6",
+    "express": "^4.18.1",
     "socket.io": "^4.5.0"
   }
 }
