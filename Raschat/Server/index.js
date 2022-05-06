@@ -7,24 +7,32 @@ var { Server } = require("socket.io");
 var io = new Server(server);
 
 const port = 8080;
-const hostname = 'localhost'
+const hostname = 'localhost';
+const users = {};
 
+app.use(express.static(__dirname + '/static'));
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+  res.sendFile(path.join(__dirname, 'static/index.html'))
+});
+
+
+io.on('connection', (socket) => {
+  //socket.emit('message', 'Sei connesso amico!');
+  socket.on('login', function(data){
+    const sessionID = socket.id;
+    console.log('a user ' + sessionID + ' connected');
+    users[socket.id] = sessionID;
   });
-  
-  io.on('connection', (socket) => {
-    console.log('a user connected');
-    //socket.emit('message', 'Sei connesso amico!');
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-      });
-      socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
-      });
+  socket.on('disconnect', function(){
+    console.log('user ' + users[socket.id] + ' disconnected');
+    delete users[socket.id];
   });
-  io.emit('some event', { someProperty: 'some value', otherProperty: 'other value' });
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+});
+io.emit('some event', { someProperty: 'some value', otherProperty: 'other value' });
 
 server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-  });
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
