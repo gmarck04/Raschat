@@ -2,58 +2,48 @@
 <html lang="it">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
     <title>Login</title>
 </head>
 
 <body>
-    <div class="dropdown-menu">
-        <form id="form" class="px-4 py-3">
-            <div class="mb-3">
-                <label for="exampleDropdownFormEmail1" class="form-label">Email address</label>
-                <input type="number" class="form-control" id="number" placeholder="333 333 3333">
-            </div>
-            <!--<div class="mb-3">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                    <label class="form-check-label" for="dropdownCheck">
-                        Remember me
-                    </label>
-                </div>
-            </div>-->
-            <button type="submit" class="btn btn-primary">Sign in</button>
-        </form>
-        <!--<div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">New around here? Sign up</a>
-        <a class="dropdown-item" href="#">Forgot password?</a>-->
+    <div class="n_log_in" id="n_log_in">
+        <input type="text" id="number" placeholder="numero..." /><br>
+        <button id="Login_Register">Login / Register</button>
+    </div>
+
+    <div class="log_in" id="log_in" style="display: none;">
+        text
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
         var socket = io('http://localhost:8080');
-        socket.emit('login',{userId:'YourUserID'});
+        socket.emit('login', { userId: 'YourUserID' });
 
-        var numero = document.getElementById("number").value;
-        var form = document.getElementById('form');
+        $("#Login_Register").click(function () {
+            socket.emit("login_register", {
+                number: $("#number").val()
+            });
+        });
 
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            if (numero.value) {
-                socket.emit('number', numero.value);
-            }
+        socket.on("logged_in", function (number) {
+            const ancora = document.getElementById("log_in");
+
+            document.getElementById("n_log_in").style.display = "none";
+            ancora.innerText = "Welcome back " + number + ", nice to see you again!";
+            document.getElementById("log_in").style.display = "block";
+        });
+
+        socket.on("invalid", function() {
+            const ancora = document.getElementById("log_in");
+
+            document.getElementById("n_log_in").style.display = "none";
+            ancora.innerText = "Numero errato";
+            document.getElementById("log_in").style.display = "block";
         });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>
