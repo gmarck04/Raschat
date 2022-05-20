@@ -5,11 +5,20 @@ var app = express();
 var server = http.createServer(app);
 var { Server } = require("socket.io");
 var io = new Server(server);
+//var List = require("collections/list");
 
+'use strict';
+class Utente {
+  constructor(numero, socketId) {
+      this.numero = numero;
+      this.socketId = socketId;
+  }
+  GetSocketId() { return this.socketId; }
+} 
 
 const port = 8080;
 const hostname = 'localhost';
-const users = {};
+//const users = {};
 
 app.use(express.static(__dirname + '/static'));
 app.get('/', (req, res) => {
@@ -23,14 +32,15 @@ app.get('/login', (req, res) => {
 
 io.on('connection', (socket) => {
   //socket.emit('message', 'Sei connesso amico!');
-  socket.on('login', function (data) {
-    const sessionID = socket.id;
-    console.log('a user ' + sessionID + ' connected');
-    users[socket.id] = sessionID;
+  //var list = new List();
+  //list.push(new Utente(1, socket.id));
+  let Log = new Utente(1, socket.id);
+  socket.on('login', function (data) {    
+    console.log('a user ' + Log.GetSocketId() + ' connected');
+    //users[socket.id] = socket.id;
   });
   socket.on('disconnect', function () {
-    console.log('user ' + users[socket.id] + ' disconnected');
-    delete users[socket.id];
+    console.log('user ' + Log.GetSocketId() + ' disconnected');
   });
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);

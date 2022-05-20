@@ -10,7 +10,7 @@ const createWindow = () => {
         }
     })
 
-    win.loadURL('http://localhost:8080/login.html')
+    win.loadURL('http://localhost:8080/')
     win.maximize()
     win.webContents.openDevTools()
 }
